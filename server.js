@@ -1,16 +1,14 @@
 const express = require('express');
-const routerProductos = require('./routes/productos.js');
-
-const PORT = 3000;
 const app = express();
+const PORT = 3000;
 
-app.use(express.json());
+// Middlewares
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(express.static('public'));
+app.use('/api/productos', require('./src/routes/productos'));
 
-app.use('/api', routerProductos);
-
-const server = app.listen(PORT, () =>
-	console.log(`Server running on port ${PORT}`)
-);
-server.on('error', err => console.log(`Error: ${err}`));
+// Server
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
